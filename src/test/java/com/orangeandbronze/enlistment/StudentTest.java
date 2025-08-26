@@ -6,11 +6,8 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.orangeandbronze.enlistment.Days.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentTest {
     static final Schedule DEFAULT_SCHEDULE = new Schedule(MTH, new Period(830, 1000));
@@ -302,5 +299,29 @@ public class StudentTest {
         //When the student enlists in the said section
         //Then the student should unsuccessfully enlist the said section
         assertThrows(SubjectNotInProgramException.class, () -> student.enlist(sec1));
+    }
+    @Test
+    public void checkRoomOverlaps_throwsRoomConflictException_whenSchedulesOverlap() {
+        // Arrange
+        Period period1 = new Period(900, 1030);
+        Period period2 = new Period(1000, 1130);
+        Section section = new Section("S1", new Schedule(Days.MTH, period2),
+                new Room("R1", 10), new Subject("MATH", 3));
+
+        // Act & Assert
+        assertThrows(RoomConflictException.class,
+                () -> period1.checkRoomOverlaps(period2, section));
+    }
+
+    @Test
+    public void checkRoomOverlaps_noException_whenSchedulesDoNotOverlap() {
+        // Arrange
+        Period period1 = new Period(900, 1000);
+        Period period2 = new Period(1100, 1200);
+        Section section = new Section("S1", new Schedule(Days.MTH, period2),
+                new Room("R1", 10), new Subject("MATH", 3));
+
+        // Act & Assert
+        assertDoesNotThrow(() -> period1.checkRoomOverlaps(period2, section));
     }
 }

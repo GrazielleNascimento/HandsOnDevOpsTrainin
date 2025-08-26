@@ -18,6 +18,9 @@ public class Section {
     private final Subject subject;
     private int numStudents = 0;
 
+    public Room getRoom() {
+        return room;
+    } // Adicionei para testar a Room da Section
 
     Section(String sectionID, Schedule schedule, Room room, Subject subject){
         notBlank(sectionID);
