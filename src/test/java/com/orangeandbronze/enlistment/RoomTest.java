@@ -1,8 +1,8 @@
 package com.orangeandbronze.enlistment;
 
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RoomTest {
@@ -25,4 +25,33 @@ public class RoomTest {
         // Invalid capacity
         //assertThrows(IllegalArgumentException.class, () -> new Room("R1", -5));
     }
+
+    @Test
+    public void testEquals_sameObject() {
+        Room r = new Room("R1", 5);
+        assertEquals(r, r); // Same instance
+    }
+
+    @Test
+    public void testEquals_equalObjects() {
+        Room r1 = new Room("R1", 5);
+        Room r2 = new Room("R1", 5);
+        assertEquals(r1, r2); // Different instances, same data
+    }
+
+    @Test
+    public void testEquals_differentName() {
+        Room r1 = new Room("R1", 5);
+        Room r2 = new Room("R2", 5);
+        assertNotEquals(r1, r2);
+    }
+
+    @Test
+    public void testEquals_differentCapacity() {
+        Room r1 = new Room("R1", 5);
+        Room r2 = new Room("R1", 10);
+        assertNotEquals(r1, r2);
+    }
+
+
 }
