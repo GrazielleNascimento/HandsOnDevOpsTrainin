@@ -12,8 +12,8 @@ public class RoomTest {
         Room room = new Room("R1", 2);
 
         assertFalse(room.isFull(1)); // Below capacity
-        assertTrue(room.isFull(2));  // At capacity
-        assertTrue(room.isFull(3));  // Over capacity
+        assertTrue(room.isFull(2)); // At capacity
+        assertTrue(room.isFull(3)); // Over capacity
     }
 
     @Test
@@ -23,7 +23,7 @@ public class RoomTest {
         assertThrows(IllegalArgumentException.class, () -> new Room("", 10));
 
         // Invalid capacity
-        //assertThrows(IllegalArgumentException.class, () -> new Room("R1", -5));
+        // assertThrows(IllegalArgumentException.class, () -> new Room("R1", -5));
     }
 
     @Test
@@ -53,5 +53,16 @@ public class RoomTest {
         assertNotEquals(r1, r2);
     }
 
+    @Test
+    public void testEquals_differentClass() {
+        Room r = new Room("R1", 5);
+        assertNotEquals(r, "alguma coisa"); // Compare with different type
+    }
 
+    @Test
+    public void testHashCode_equalObjects() {
+        Room r1 = new Room("R1", 5);
+        Room r2 = new Room("R1", 5);
+        assertEquals(r1.hashCode(), r2.hashCode());
+    }
 }
